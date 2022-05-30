@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.XqMemberClassMapper">
+    
+    <resultMap type="XqMemberClass" id="XqMemberClassResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="termsJson"    column="terms_json"    />
+        <result property="remark"    column="remark"    />
+        <result property="originalPrice"    column="original_price"    />
+        <result property="salePrice"    column="sale_price"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="createdate"    column="createdate"    />
+        <result property="lastdate"    column="lastdate"    />
+    </resultMap>
+
+    <resultMap id="XqMemberClassXqMemberClassDetailsResult" type="XqMemberClass" extends="XqMemberClassResult">
+        <collection property="xqMemberClassDetailsList" notNullColumn="sub_id" javaType="java.util.List" resultMap="XqMemberClassDetailsResult" />
+    </resultMap>
+
+    <resultMap type="XqMemberClassDetails" id="XqMemberClassDetailsResult">
+        <result property="id"    column="sub_id"    />
+        <result property="memberId"    column="sub_member_id"    />
+        <result property="type"    column="sub_type"    />
+        <result property="isTimeBar"    column="sub_is_time_bar"    />
+        <result property="month"    column="sub_month"    />
+        <result property="isTriesLimit"    column="sub_is_tries_limit"    />
+        <result property="frequency"    column="sub_frequency"    />
+        <result property="createdate"    column="sub_createdate"    />
+        <result property="lastdate"    column="sub_lastdate"    />
+        <result property="isDelete"    column="sub_is_delete"    />
+    </resultMap>
+
+    <sql id="selectXqMemberClassVo">
+        select id, name, terms_json, remark, original_price, sale_price, is_delete, createdate, lastdate from xq_member_class
+    </sql>
+
+    <select id="selectXqMemberClassList" parameterType="XqMemberClass" resultMap="XqMemberClassResult">
+        <include refid="selectXqMemberClassVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete}</if>
+        </where>
+    </select>
+    
+    <select id="selectXqMemberClassById" parameterType="Long" resultMap="XqMemberClassXqMemberClassDetailsResult">
+        select a.id, a.name, a.terms_json, a.remark, a.original_price, a.sale_price, a.is_delete, a.createdate, a.lastdate,
+ b.id as sub_id, b.member_id as sub_member_id, b.type as sub_type, b.is_time_bar as sub_is_time_bar, b.month as sub_month, b.is_tries_limit as sub_is_tries_limit, b.frequency as sub_frequency, b.createdate as sub_createdate, b.lastdate as sub_lastdate, b.is_delete as sub_is_delete
+        from xq_member_class a
+        left join xq_member_class_details b on b.member_id = a.id
+        where a.id = #{id} and b.is_delete = 0
+    </select>
+        
+    <insert id="insertXqMemberClass" parameterType="XqMemberClass" useGeneratedKeys="true" keyProperty="id">
+        insert into xq_member_class
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="termsJson != null and termsJson != ''">terms_json,</if>
+            <if test="remark != null">remark,</if>
+            <if test="originalPrice != null">original_price,</if>
+            <if test="salePrice != null">sale_price,</if>
+            <if test="isDelete != null and isDelete != ''">is_delete,</if>
+            <if test="createdate != null">createdate,</if>
+            <if test="lastdate != null">lastdate,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="termsJson != null and termsJson != ''">#{termsJson},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="originalPrice != null">#{originalPrice},</if>
+            <if test="salePrice != null">#{salePrice},</if>
+            <if test="isDelete != null and isDelete != ''">#{isDelete},</if>
+            <if test="createdate != null">#{createdate},</if>
+            <if test="lastdate != null">#{lastdate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXqMemberClass" parameterType="XqMemberClass">
+        update xq_member_class
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="termsJson != null and termsJson != ''">terms_json = #{termsJson},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="originalPrice != null">original_price = #{originalPrice},</if>
+            <if test="salePrice != null">sale_price = #{salePrice},</if>
+            <if test="isDelete != null and isDelete != ''">is_delete = #{isDelete},</if>
+            <if test="createdate != null">createdate = #{createdate},</if>
+            <if test="lastdate != null">lastdate = #{lastdate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXqMemberClassById" parameterType="Long">
+        delete from xq_member_class where id = #{id}
+    </delete>
+
+    <!--<delete id="deleteXqMemberClassByIds" parameterType="String">-->
+        <!--delete from xq_member_class where id in -->
+        <!--<foreach item="id" collection="array" open="(" separator="," close=")">-->
+            <!--#{id}-->
+        <!--</foreach>-->
+    <!--</delete>-->
+
+    <update id="deleteXqMemberClassByIds" parameterType="String">
+        update xq_member_class set is_delete = 1
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    
+    <delete id="deleteXqMemberClassDetailsByMemberIds" parameterType="String">
+        delete from xq_member_class_details where member_id in 
+        <foreach item="memberId" collection="array" open="(" separator="," close=")">
+            #{memberId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteXqMemberClassDetailsByMemberId" parameterType="Long">
+        delete from xq_member_class_details where member_id = #{memberId}
+    </delete>
+
+    <update id="deleteXqMemberClassDetailsByIds" parameterType="String">
+        update xq_member_class_details set is_delete = 1
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <insert id="batchXqMemberClassDetails">
+        insert into xq_member_class_details( id, member_id, type, is_time_bar, month, is_tries_limit, frequency) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.memberId}, #{item.type}, #{item.isTimeBar}, #{item.month}, #{item.isTriesLimit}, #{item.frequency})
+        </foreach>
+    </insert>
+
+    <update id="updateXqMemberClassDetails" parameterType="XqMemberClassDetails">
+        update xq_member_class_details
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="isTimeBar != null and isTimeBar != ''">is_time_bar = #{isTimeBar},</if>
+            <if test="month != null">month = #{month},</if>
+            <if test="isTriesLimit != null and isTriesLimit != ''">is_tries_limit = #{isTriesLimit},</if>
+            <if test="frequency != null">frequency = #{frequency},</if>
+            <if test="createdate != null">createdate = #{createdate},</if>
+            <if test="lastdate != null">lastdate = #{lastdate},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+</mapper>

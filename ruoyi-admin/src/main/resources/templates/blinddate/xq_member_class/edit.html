@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改会员等级 （套餐）')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-xq_member_class-edit" th:object="${xqMemberClass}">
+            <h4 class="form-header h4">会员等级 （套餐）信息</h4>
+            <input name="id" th:field="*{id}" type="hidden">
+            <input name="ids_" id="ids_" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">等级名称：</label>
+                <div class="col-sm-8">
+                    <input name="name" th:field="*{name}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">套餐条款json：</label>
+                <div class="col-sm-8">
+                    <textarea name="termsJson" class="form-control" required>[[*{termsJson}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">套餐原价：</label>
+                <div class="col-sm-8">
+                    <input name="originalPrice" th:field="*{originalPrice}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">套餐销售价格：</label>
+                <div class="col-sm-8">
+                    <input name="salePrice" th:field="*{salePrice}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <h4 class="form-header h4">会员等级详情信息</h4>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-white btn-sm" onclick="addRow()"><i class="fa fa-plus"> 增加</i></button>
+                    <button type="button" class="btn btn-white btn-sm" onclick="sub.delRow()"><i class="fa fa-minus"> 删除</i></button>
+                    <div class="col-sm-12 select-table table-striped">
+                        <table id="bootstrap-table"></table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "blinddate/xq_member_class";
+        var typeDatas = [[${@dict.getType('xq_blind_date_set_meal_type')}]];
+        var isTimeBarDatas = [[${@dict.getType('xq_yes_no')}]];
+        var isTriesLimitDatas = [[${@dict.getType('xq_yes_no')}]];
+        var ids_ = "";
+        $("#form-xq_member_class-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $("#ids_").val(ids_);
+                $.operate.save(prefix + "/edit", $('#form-xq_member_class-edit').serialize());
+            }
+        }
+
+        $(function() {
+            var options = {
+                data: [[${xqMemberClass.xqMemberClassDetailsList}]],
+                pagination: false,
+                showSearch: false,
+                showRefresh: false,
+                showToggle: false,
+                showColumns: false,
+                sidePagination: "client",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: 'ID',
+                    <!--visible: false,-->
+                    formatter: function (value, row, index) {
+                    	var columnIndex = $.common.sprintf("<input type='hidden' name='xqMemberClassDetailsList[%s].id' value='%s'>", index,value);
+                    	return columnIndex;
+                    }
+                },
+                {
+                    field: 'index',
+                    align: 'center',
+                    title: "序号",
+                    formatter: function (value, row, index) {
+                    	var columnIndex = $.common.sprintf("<input type='hidden' name='index' value='%s'>", $.table.serialNumber(index));
+                    	return columnIndex + $.table.serialNumber(index);
+                    }
+                },
+                {
+                    field: 'type',
+                    align: 'center',
+                    title: '套餐类型',
+                    width: 120 ,
+                    formatter: function(value, row, index) {
+                        var name = $.common.sprintf("xqMemberClassDetailsList[%s].type", index);
+                        return $.common.dictToSelect(typeDatas, value, name);
+                    }
+                },
+                {
+                    field: 'isTimeBar',
+                    align: 'center',
+                    title: '是否有时间限制',
+                    formatter: function(value, row, index) {
+                        var name = $.common.sprintf("xqMemberClassDetailsList[%s].isTimeBar", index);
+                        return $.common.dictToSelect(isTimeBarDatas, value, name);
+                    }
+                },
+                {
+                    field: 'month',
+                    align: 'center',
+                    title: '月',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='xqMemberClassDetailsList[%s].month' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+
+                {
+                    field: 'isTriesLimit',
+                    align: 'center',
+                    title: '是否有次数限制',
+                    formatter: function(value, row, index) {
+                        var name = $.common.sprintf("xqMemberClassDetailsList[%s].isTriesLimit", index);
+                        return $.common.dictToSelect(isTriesLimitDatas, value, name);
+                    }
+                },
+                {
+                    field: 'frequency',
+                    align: 'center',
+                    title: '次数',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='xqMemberClassDetailsList[%s].frequency' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var value = $.common.isNotEmpty(row.index) ? row.index : $.table.serialNumber(index);
+                        return '<a class="btn btn-danger btn-xs" href="javascript:void(0)" onclick="deleterow_(\'' + value + '\',\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>';
+                        <!--return '<a class="btn btn-danger btn-xs" href="javascript:void(0)" onclick="sub.delRowByIndex(\'' + value + '\')"><i class="fa fa-remove"></i>删除</a>';-->
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+
+        function addRow() {
+            var count = $("#" + table.options.id).bootstrapTable('getData').length;
+            var row = {
+                id: "",
+                index: $.table.serialNumber(count),
+                type: "",
+                isTimeBar: "",
+                month: "",
+                isTriesLimit: "",
+                frequency: "",
+            }
+            sub.addRow(row);
+        }
+
+        function deleterow_(index , id){
+            alert(index + "    " + id);
+
+            ids_ +=  id + "_";
+            sub.delRowByIndex(index)
+        }
+
+
+    </script>
+</body>
+</html>
