@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.XqMemberMapper">
+    
+    <resultMap type="XqMember" id="XqMemberResult">
+        <result property="id"    column="id"    />
+        <result property="wechatId"    column="weChat_id"    />
+        <result property="name"    column="name"    />
+        <result property="alias"    column="alias"    />
+        <result property="sexStr"    column="sex_str"    />
+        <result property="sex"    column="sex"    />
+        <result property="birthDate"    column="birth_date"    />
+        <result property="age"    column="age"    />
+        <result property="weight"    column="weight"    />
+        <result property="height"    column="height"    />
+        <result property="incomeStr"    column="income_str"    />
+        <result property="income"    column="income"    />
+        <result property="educationStr"    column="education_str"    />
+        <result property="education"    column="education"    />
+        <result property="hometownStr"    column="hometown_str"    />
+        <result property="hometown"    column="hometown"    />
+        <result property="workplaceStr"    column="workplace_str"    />
+        <result property="workplace"    column="workplace"    />
+        <result property="marriageStr"    column="marriage_str"    />
+        <result property="marriage"    column="marriage"    />
+        <result property="isKid"    column="is_kid"    />
+        <result property="occupation"    column="occupation"    />
+        <result property="isDemandKid"    column="is_demand_kid"    />
+        <result property="carStr"    column="car_str"    />
+        <result property="car"    column="car"    />
+        <result property="houseStr"    column="house_str"    />
+        <result property="house"    column="house"    />
+        <result property="weChat"    column="weChat"    />
+        <result property="phone"    column="phone"    />
+        <result property="religionStr"    column="religion_str"    />
+        <result property="religion"    column="religion"    />
+        <result property="isSmoking"    column="is_smoking"    />
+        <result property="isDrink"    column="is_drink"    />
+        <result property="headPortraitUrl"    column="head_portrait_url"    />
+        <result property="pictureJson"    column="picture_json"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="isAutonym"    column="is_autonym"    />
+        <result property="isEducation"    column="is_education"    />
+        <result property="isMarriage"    column="is_marriage"    />
+        <result property="isCar"    column="is_car"    />
+        <result property="isHouse"    column="is_house"    />
+        <result property="isWork"    column="is_work"    />
+        <result property="isIncome"    column="is_income"    />
+        <result property="selfDescription"    column="self_description"    />
+        <result property="interest"    column="interest"    />
+        <result property="mateCriterionDescription"    column="mate_criterion_description"    />
+        <result property="familyBackground"    column="family_background"    />
+        <result property="createdate"    column="createdate"    />
+        <result property="lastdate"    column="lastdate"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="state"    column="state"    />
+        <result property="remark"    column="remark"    />
+        <result property="isConceal"    column="is_conceal"    />
+    </resultMap>
+
+    <sql id="selectXqMemberVo">
+        select id, weChat_id, name, alias, sex_str, sex, birth_date, age, weight, height, income_str, income, education_str, education, hometown_str, hometown, workplace_str, workplace, marriage_str, marriage, is_kid, occupation, is_demand_kid, car_str, car, house_str, house, weChat, phone, religion_str, religion, is_smoking, is_drink, head_portrait_url, picture_json, id_card, is_autonym, is_education, is_marriage, is_car, is_house, is_work, is_income, self_description, interest, mate_criterion_description, family_background, createdate, lastdate, is_delete, state, remark, is_conceal from xq_member
+    </sql>
+
+    <select id="selectXqMemberList" parameterType="XqMember" resultMap="XqMemberResult">
+        <include refid="selectXqMemberVo"/>
+        <where>  
+            <if test="wechatId != null  and wechatId != ''"> and weChat_id = #{wechatId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="alias != null  and alias != ''"> and alias like concat('%', #{alias}, '%')</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="params.beginAge != null and params.beginAge != '' and params.endAge != null and params.endAge != ''"> and age between #{params.beginAge} and #{params.endAge}</if>
+            <if test="params.beginWeight != null and params.beginWeight != '' and params.endWeight != null and params.endWeight != ''"> and weight between #{params.beginWeight} and #{params.endWeight}</if>
+            <if test="params.beginHeight != null and params.beginHeight != '' and params.endHeight != null and params.endHeight != ''"> and height between #{params.beginHeight} and #{params.endHeight}</if>
+            <if test="income != null  and income != ''"> and income = #{income}</if>
+            <if test="education != null  and education != ''"> and education = #{education}</if>
+            <if test="hometownStr != null  and hometownStr != ''"> and hometown_str like concat('%', #{hometownStr}, '%')</if>
+            <if test="workplaceStr != null  and workplaceStr != ''"> and workplace_str like concat('%', #{workplaceStr}, '%')</if>
+            <if test="marriage != null  and marriage != ''"> and marriage = #{marriage}</if>
+            <if test="isKid != null  and isKid != ''"> and is_kid = #{isKid}</if>
+            <if test="occupation != null  and occupation != ''"> and occupation like concat('%', #{occupation}, '%')</if>
+            <if test="isDemandKid != null  and isDemandKid != ''"> and is_demand_kid = #{isDemandKid}</if>
+            <if test="car != null  and car != ''"> and car = #{car}</if>
+            <if test="house != null  and house != ''"> and house = #{house}</if>
+            <if test="weChat != null  and weChat != ''"> and weChat = #{weChat}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="religion != null  and religion != ''"> and religion = #{religion}</if>
+            <if test="isSmoking != null  and isSmoking != ''"> and is_smoking = #{isSmoking}</if>
+            <if test="isDrink != null  and isDrink != ''"> and is_drink = #{isDrink}</if>
+            <if test="pictureJson != null  and pictureJson != ''"> and picture_json = #{pictureJson}</if>
+            <if test="idCard != null  and idCard != ''"> and id_card like concat('%', #{idCard}, '%')</if>
+            <if test="isAutonym != null  and isAutonym != ''"> and is_autonym = #{isAutonym}</if>
+            <if test="isEducation != null  and isEducation != ''"> and is_education = #{isEducation}</if>
+            <if test="isMarriage != null  and isMarriage != ''"> and is_marriage = #{isMarriage}</if>
+            <if test="isCar != null  and isCar != ''"> and is_car = #{isCar}</if>
+            <if test="isHouse != null  and isHouse != ''"> and is_house = #{isHouse}</if>
+            <if test="isWork != null  and isWork != ''"> and is_work = #{isWork}</if>
+            <if test="isIncome != null  and isIncome != ''"> and is_income = #{isIncome}</if>
+            <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="isConceal != null  and isConceal != ''"> and is_conceal = #{isConceal}</if>
+        </where>
+    </select>
+    
+    <select id="selectXqMemberById" parameterType="Long" resultMap="XqMemberResult">
+        <include refid="selectXqMemberVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertXqMember" parameterType="XqMember" useGeneratedKeys="true" keyProperty="id">
+        insert into xq_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wechatId != null">weChat_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="alias != null and alias != ''">alias,</if>
+            <if test="sexStr != null">sex_str,</if>
+            <if test="sex != null and sex != ''">sex,</if>
+            <if test="birthDate != null and birthDate != ''">birth_date,</if>
+            <if test="age != null and age != ''">age,</if>
+            <if test="weight != null and weight != ''">weight,</if>
+            <if test="height != null and height != ''">height,</if>
+            <if test="incomeStr != null">income_str,</if>
+            <if test="income != null and income != ''">income,</if>
+            <if test="educationStr != null">education_str,</if>
+            <if test="education != null and education != ''">education,</if>
+            <if test="hometownStr != null and hometownStr != ''">hometown_str,</if>
+            <if test="hometown != null">hometown,</if>
+            <if test="workplaceStr != null and workplaceStr != ''">workplace_str,</if>
+            <if test="workplace != null">workplace,</if>
+            <if test="marriageStr != null">marriage_str,</if>
+            <if test="marriage != null and marriage != ''">marriage,</if>
+            <if test="isKid != null">is_kid,</if>
+            <if test="occupation != null and occupation != ''">occupation,</if>
+            <if test="isDemandKid != null">is_demand_kid,</if>
+            <if test="carStr != null">car_str,</if>
+            <if test="car != null">car,</if>
+            <if test="houseStr != null">house_str,</if>
+            <if test="house != null">house,</if>
+            <if test="weChat != null">weChat,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="religionStr != null">religion_str,</if>
+            <if test="religion != null">religion,</if>
+            <if test="isSmoking != null">is_smoking,</if>
+            <if test="isDrink != null">is_drink,</if>
+            <if test="headPortraitUrl != null">head_portrait_url,</if>
+            <if test="pictureJson != null">picture_json,</if>
+            <if test="idCard != null">id_card,</if>
+            <if test="isAutonym != null">is_autonym,</if>
+            <if test="isEducation != null">is_education,</if>
+            <if test="isMarriage != null">is_marriage,</if>
+            <if test="isCar != null">is_car,</if>
+            <if test="isHouse != null">is_house,</if>
+            <if test="isWork != null">is_work,</if>
+            <if test="isIncome != null">is_income,</if>
+            <if test="selfDescription != null">self_description,</if>
+            <if test="interest != null">interest,</if>
+            <if test="mateCriterionDescription != null">mate_criterion_description,</if>
+            <if test="familyBackground != null">family_background,</if>
+            <if test="createdate != null">createdate,</if>
+            <if test="lastdate != null">lastdate,</if>
+            <if test="isDelete != null">is_delete,</if>
+            <if test="state != null">state,</if>
+            <if test="remark != null">remark,</if>
+            <if test="isConceal != null">is_conceal,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wechatId != null">#{wechatId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="alias != null and alias != ''">#{alias},</if>
+            <if test="sexStr != null">#{sexStr},</if>
+            <if test="sex != null and sex != ''">#{sex},</if>
+            <if test="birthDate != null and birthDate != ''">#{birthDate},</if>
+            <if test="age != null and age != ''">#{age},</if>
+            <if test="weight != null and weight != ''">#{weight},</if>
+            <if test="height != null and height != ''">#{height},</if>
+            <if test="incomeStr != null">#{incomeStr},</if>
+            <if test="income != null and income != ''">#{income},</if>
+            <if test="educationStr != null">#{educationStr},</if>
+            <if test="education != null and education != ''">#{education},</if>
+            <if test="hometownStr != null and hometownStr != ''">#{hometownStr},</if>
+            <if test="hometown != null">#{hometown},</if>
+            <if test="workplaceStr != null and workplaceStr != ''">#{workplaceStr},</if>
+            <if test="workplace != null">#{workplace},</if>
+            <if test="marriageStr != null">#{marriageStr},</if>
+            <if test="marriage != null and marriage != ''">#{marriage},</if>
+            <if test="isKid != null">#{isKid},</if>
+            <if test="occupation != null and occupation != ''">#{occupation},</if>
+            <if test="isDemandKid != null">#{isDemandKid},</if>
+            <if test="carStr != null">#{carStr},</if>
+            <if test="car != null">#{car},</if>
+            <if test="houseStr != null">#{houseStr},</if>
+            <if test="house != null">#{house},</if>
+            <if test="weChat != null">#{weChat},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="religionStr != null">#{religionStr},</if>
+            <if test="religion != null">#{religion},</if>
+            <if test="isSmoking != null">#{isSmoking},</if>
+            <if test="isDrink != null">#{isDrink},</if>
+            <if test="headPortraitUrl != null">#{headPortraitUrl},</if>
+            <if test="pictureJson != null">#{pictureJson},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="isAutonym != null">#{isAutonym},</if>
+            <if test="isEducation != null">#{isEducation},</if>
+            <if test="isMarriage != null">#{isMarriage},</if>
+            <if test="isCar != null">#{isCar},</if>
+            <if test="isHouse != null">#{isHouse},</if>
+            <if test="isWork != null">#{isWork},</if>
+            <if test="isIncome != null">#{isIncome},</if>
+            <if test="selfDescription != null">#{selfDescription},</if>
+            <if test="interest != null">#{interest},</if>
+            <if test="mateCriterionDescription != null">#{mateCriterionDescription},</if>
+            <if test="familyBackground != null">#{familyBackground},</if>
+            <if test="createdate != null">#{createdate},</if>
+            <if test="lastdate != null">#{lastdate},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+            <if test="state != null">#{state},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="isConceal != null">#{isConceal},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXqMember" parameterType="XqMember">
+        update xq_member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="wechatId != null">weChat_id = #{wechatId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="alias != null and alias != ''">alias = #{alias},</if>
+            <if test="sexStr != null">sex_str = #{sexStr},</if>
+            <if test="sex != null and sex != ''">sex = #{sex},</if>
+            <if test="birthDate != null and birthDate != ''">birth_date = #{birthDate},</if>
+            <if test="age != null and age != ''">age = #{age},</if>
+            <if test="weight != null and weight != ''">weight = #{weight},</if>
+            <if test="height != null and height != ''">height = #{height},</if>
+            <if test="incomeStr != null">income_str = #{incomeStr},</if>
+            <if test="income != null and income != ''">income = #{income},</if>
+            <if test="educationStr != null">education_str = #{educationStr},</if>
+            <if test="education != null and education != ''">education = #{education},</if>
+            <if test="hometownStr != null and hometownStr != ''">hometown_str = #{hometownStr},</if>
+            <if test="hometown != null">hometown = #{hometown},</if>
+            <if test="workplaceStr != null and workplaceStr != ''">workplace_str = #{workplaceStr},</if>
+            <if test="workplace != null">workplace = #{workplace},</if>
+            <if test="marriageStr != null">marriage_str = #{marriageStr},</if>
+            <if test="marriage != null and marriage != ''">marriage = #{marriage},</if>
+            <if test="isKid != null">is_kid = #{isKid},</if>
+            <if test="occupation != null and occupation != ''">occupation = #{occupation},</if>
+            <if test="isDemandKid != null">is_demand_kid = #{isDemandKid},</if>
+            <if test="carStr != null">car_str = #{carStr},</if>
+            <if test="car != null">car = #{car},</if>
+            <if test="houseStr != null">house_str = #{houseStr},</if>
+            <if test="house != null">house = #{house},</if>
+            <if test="weChat != null">weChat = #{weChat},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="religionStr != null">religion_str = #{religionStr},</if>
+            <if test="religion != null">religion = #{religion},</if>
+            <if test="isSmoking != null">is_smoking = #{isSmoking},</if>
+            <if test="isDrink != null">is_drink = #{isDrink},</if>
+            <if test="headPortraitUrl != null">head_portrait_url = #{headPortraitUrl},</if>
+            <if test="pictureJson != null">picture_json = #{pictureJson},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="isAutonym != null">is_autonym = #{isAutonym},</if>
+            <if test="isEducation != null">is_education = #{isEducation},</if>
+            <if test="isMarriage != null">is_marriage = #{isMarriage},</if>
+            <if test="isCar != null">is_car = #{isCar},</if>
+            <if test="isHouse != null">is_house = #{isHouse},</if>
+            <if test="isWork != null">is_work = #{isWork},</if>
+            <if test="isIncome != null">is_income = #{isIncome},</if>
+            <if test="selfDescription != null">self_description = #{selfDescription},</if>
+            <if test="interest != null">interest = #{interest},</if>
+            <if test="mateCriterionDescription != null">mate_criterion_description = #{mateCriterionDescription},</if>
+            <if test="familyBackground != null">family_background = #{familyBackground},</if>
+            <if test="createdate != null">createdate = #{createdate},</if>
+            <if test="lastdate != null">lastdate = #{lastdate},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="isConceal != null">is_conceal = #{isConceal},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXqMemberById" parameterType="Long">
+        delete from xq_member where id = #{id}
+    </delete>
+
+    <delete id="deleteXqMemberByIds" parameterType="String">
+        delete from xq_member where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

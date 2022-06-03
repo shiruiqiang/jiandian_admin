@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('会员列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>微信id：</label>
+                                <input type="text" name="wechatId"/>
+                            </li>
+                            <li>
+                                <label>姓名：</label>
+                                <input type="text" name="name"/>
+                            </li>
+                            <li>
+                                <label>昵称：</label>
+                                <input type="text" name="alias"/>
+                            </li>
+                            <li>
+                                <label>性别：</label>
+                                <select name="sex" th:with="type=${@dict.getType('sys_user_sex')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>年龄：</label>
+                                <input type="text" name="age"/>
+                            </li>
+                            <li>
+                                <label>体重：</label>
+                                <input type="text" name="weight"/>
+                            </li>
+                            <li>
+                                <label>身高：</label>
+                                <input type="text" name="height"/>
+                            </li>
+                            <li>
+                                <label>月收入：</label>
+                                <select name="income" th:with="type=${@dict.getType('xq_income')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>学历：</label>
+                                <select name="education" th:with="type=${@dict.getType('xq_education')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>故乡字符：</label>
+                                <input type="text" name="hometownStr"/>
+                            </li>
+                            <li>
+                                <label>工作地字符：</label>
+                                <input type="text" name="workplaceStr"/>
+                            </li>
+                            <li>
+                                <label>婚姻状况：</label>
+                                <select name="marriage" th:with="type=${@dict.getType('xq_marriage')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否有小孩：</label>
+                                <select name="isKid" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>职业：</label>
+                                <input type="text" name="occupation"/>
+                            </li>
+                            <li>
+                                <label>是否要小孩：</label>
+                                <select name="isDemandKid" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>买车情况：</label>
+                                <select name="car" th:with="type=${@dict.getType('xq_car')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>买房情况：</label>
+                                <select name="house" th:with="type=${@dict.getType('xq_house')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>微信号：</label>
+                                <input type="text" name="weChat"/>
+                            </li>
+                            <li>
+                                <label>手机号码：</label>
+                                <input type="text" name="phone"/>
+                            </li>
+                            <li>
+                                <label>宗教信仰：</label>
+                                <select name="religion" th:with="type=${@dict.getType('xq_religion')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否抽烟：</label>
+                                <select name="isSmoking" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否喝酒：</label>
+                                <select name="isDrink" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>身份证号：</label>
+                                <input type="text" name="idCard"/>
+                            </li>
+                            <li>
+                                <label>是否实名认证：</label>
+                                <select name="isAutonym" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否学历认证：</label>
+                                <select name="isEducation" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否婚况认证：</label>
+                                <select name="isMarriage" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否车辆认证：</label>
+                                <select name="isCar" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否房产认证：</label>
+                                <select name="isHouse" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否工作认证：</label>
+                                <select name="isWork" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否收入认证：</label>
+                                <select name="isIncome" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否删除：</label>
+                                <input type="text" name="isDelete"/>
+                            </li>
+                            <li>
+                                <label>状态：</label>
+                                <select name="state" th:with="type=${@dict.getType('xq_member_state')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否隐身：</label>
+                                <select name="isConceal" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="blinddate:xq_member:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="blinddate:xq_member:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="blinddate:xq_member:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="blinddate:xq_member:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('blinddate:xq_member:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('blinddate:xq_member:remove')}]];
+        var sexDatas = [[${@dict.getType('sys_user_sex')}]];
+        var incomeDatas = [[${@dict.getType('xq_income')}]];
+        var educationDatas = [[${@dict.getType('xq_education')}]];
+        var marriageDatas = [[${@dict.getType('xq_marriage')}]];
+        var isKidDatas = [[${@dict.getType('xq_yes_no')}]];
+        var isDemandKidDatas = [[${@dict.getType('xq_yes_no')}]];
+        var carDatas = [[${@dict.getType('xq_car')}]];
+        var houseDatas = [[${@dict.getType('xq_house')}]];
+        var religionDatas = [[${@dict.getType('xq_religion')}]];
+        var isSmokingDatas = [[${@dict.getType('xq_yes_no')}]];
+        var isDrinkDatas = [[${@dict.getType('xq_yes_no')}]];
+        var isAutonymDatas = [[${@dict.getType('xq_yes_no')}]];
+        var isEducationDatas = [[${@dict.getType('xq_yes_no')}]];
+        var isMarriageDatas = [[${@dict.getType('xq_yes_no')}]];
+        var isCarDatas = [[${@dict.getType('xq_yes_no')}]];
+        var isHouseDatas = [[${@dict.getType('xq_yes_no')}]];
+        var isWorkDatas = [[${@dict.getType('xq_yes_no')}]];
+        var isIncomeDatas = [[${@dict.getType('xq_yes_no')}]];
+        var isDeleteDatas = [[${@dict.getType('xq_yes_no')}]];
+        var stateDatas = [[${@dict.getType('xq_member_state')}]];
+        var isConcealDatas = [[${@dict.getType('xq_yes_no')}]];
+        var prefix = ctx + "blinddate/xq_member";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "会员",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: 'ID',
+                    visible: false
+                },
+                {
+                    field: 'wechatId',
+                    title: '微信id'
+                },
+                {
+                    field: 'name',
+                    title: '姓名'
+                },
+                {
+                    field: 'alias',
+                    title: '昵称'
+                },
+                {
+                    field: 'sex',
+                    title: '性别',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(sexDatas, value);
+                    }
+                },
+                {
+                    field: 'birthDate',
+                    title: '出生日期'
+                },
+                {
+                    field: 'age',
+                    title: '年龄'
+                },
+                {
+                    field: 'weight',
+                    title: '体重'
+                },
+                {
+                    field: 'height',
+                    title: '身高'
+                },
+                {
+                    field: 'income',
+                    title: '月收入',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(incomeDatas, value);
+                    }
+                },
+                {
+                    field: 'education',
+                    title: '学历',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(educationDatas, value);
+                    }
+                },
+                {
+                    field: 'hometownStr',
+                    title: '故乡字符'
+                },
+                {
+                    field: 'workplaceStr',
+                    title: '工作地字符'
+                },
+                {
+                    field: 'marriage',
+                    title: '婚姻状况',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(marriageDatas, value);
+                    }
+                },
+                {
+                    field: 'isKid',
+                    title: '是否有小孩',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isKidDatas, value);
+                    }
+                },
+                {
+                    field: 'occupation',
+                    title: '职业'
+                },
+                {
+                    field: 'isDemandKid',
+                    title: '是否要小孩',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isDemandKidDatas, value);
+                    }
+                },
+                {
+                    field: 'car',
+                    title: '买车情况',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(carDatas, value);
+                    }
+                },
+                {
+                    field: 'house',
+                    title: '买房情况',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(houseDatas, value);
+                    }
+                },
+                {
+                    field: 'weChat',
+                    title: '微信号'
+                },
+                {
+                    field: 'phone',
+                    title: '手机号码'
+                },
+                {
+                    field: 'religion',
+                    title: '宗教信仰',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(religionDatas, value);
+                    }
+                },
+                {
+                    field: 'isSmoking',
+                    title: '是否抽烟',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isSmokingDatas, value);
+                    }
+                },
+                {
+                    field: 'isDrink',
+                    title: '是否喝酒',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isDrinkDatas, value);
+                    }
+                },
+                {
+                    field: 'pictureJson',
+                    title: '相册json'
+                },
+                {
+                    field: 'idCard',
+                    title: '身份证号'
+                },
+                {
+                    field: 'isAutonym',
+                    title: '是否实名认证',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isAutonymDatas, value);
+                    }
+                },
+                {
+                    field: 'isEducation',
+                    title: '是否学历认证',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isEducationDatas, value);
+                    }
+                },
+                {
+                    field: 'isMarriage',
+                    title: '是否婚况认证',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isMarriageDatas, value);
+                    }
+                },
+                {
+                    field: 'isCar',
+                    title: '是否车辆认证',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isCarDatas, value);
+                    }
+                },
+                {
+                    field: 'isHouse',
+                    title: '是否房产认证',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isHouseDatas, value);
+                    }
+                },
+                {
+                    field: 'isWork',
+                    title: '是否工作认证',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isWorkDatas, value);
+                    }
+                },
+                {
+                    field: 'isIncome',
+                    title: '是否收入认证',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isIncomeDatas, value);
+                    }
+                },
+                {
+                    field: 'createdate',
+                    title: '创建时间'
+                },
+                {
+                    field: 'lastdate',
+                    title: '修改时间'
+                },
+                {
+                    field: 'isDelete',
+                    title: '是否删除',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isDeleteDatas, value);
+                    }
+                },
+                {
+                    field: 'state',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(stateDatas, value);
+                    }
+                },
+                {
+                    field: 'isConceal',
+                    title: '是否隐身',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isConcealDatas, value);
+                    }
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

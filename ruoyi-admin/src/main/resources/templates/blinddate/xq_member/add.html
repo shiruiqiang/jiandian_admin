@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增会员')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: bootstrap-fileinput-css"/>
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-xq_member-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">姓名：</label>
+                <div class="col-sm-8">
+                    <input name="name" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">昵称：</label>
+                <div class="col-sm-8">
+                    <input name="alias" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">性别字符：</label>
+                <div class="col-sm-8">
+                    <input name="sexStr" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">性别：</label>
+                <div class="col-sm-8">
+                    <select name="sex" class="form-control m-b" th:with="type=${@dict.getType('sys_user_sex')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">出生日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="birthDate" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">年龄：</label>
+                <div class="col-sm-8">
+                    <input name="age" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">体重：</label>
+                <div class="col-sm-8">
+                    <input name="weight" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">身高：</label>
+                <div class="col-sm-8">
+                    <input name="height" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">月收入字符：</label>
+                <div class="col-sm-8">
+                    <input name="incomeStr" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">月收入：</label>
+                <div class="col-sm-8">
+                    <select name="income" class="form-control m-b" th:with="type=${@dict.getType('xq_income')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">学历字符：</label>
+                <div class="col-sm-8">
+                    <input name="educationStr" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">学历：</label>
+                <div class="col-sm-8">
+                    <select name="education" class="form-control m-b" th:with="type=${@dict.getType('xq_education')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">故乡字符：</label>
+                <div class="col-sm-8">
+                    <input name="hometownStr" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">故乡：</label>
+                <div class="col-sm-8">
+                    <input name="hometown" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">工作地字符：</label>
+                <div class="col-sm-8">
+                    <input name="workplaceStr" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">工作地：</label>
+                <div class="col-sm-8">
+                    <input name="workplace" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">婚姻状况字符：</label>
+                <div class="col-sm-8">
+                    <input name="marriageStr" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">婚姻状况：</label>
+                <div class="col-sm-8">
+                    <select name="marriage" class="form-control m-b" th:with="type=${@dict.getType('xq_marriage')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否有小孩：</label>
+                <div class="col-sm-8">
+                    <select name="isKid" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">职业：</label>
+                <div class="col-sm-8">
+                    <input name="occupation" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否要小孩：</label>
+                <div class="col-sm-8">
+                    <select name="isDemandKid" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">买车情况字符：</label>
+                <div class="col-sm-8">
+                    <input name="carStr" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">买车情况：</label>
+                <div class="col-sm-8">
+                    <select name="car" class="form-control m-b" th:with="type=${@dict.getType('xq_car')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">买房情况字符：</label>
+                <div class="col-sm-8">
+                    <input name="houseStr" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">买房情况：</label>
+                <div class="col-sm-8">
+                    <select name="house" class="form-control m-b" th:with="type=${@dict.getType('xq_house')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">微信号：</label>
+                <div class="col-sm-8">
+                    <input name="weChat" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">手机号码：</label>
+                <div class="col-sm-8">
+                    <input name="phone" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">宗教信仰字符：</label>
+                <div class="col-sm-8">
+                    <input name="religionStr" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">宗教信仰：</label>
+                <div class="col-sm-8">
+                    <select name="religion" class="form-control m-b" th:with="type=${@dict.getType('xq_religion')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否抽烟：</label>
+                <div class="col-sm-8">
+                    <select name="isSmoking" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否喝酒：</label>
+                <div class="col-sm-8">
+                    <select name="isDrink" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">头像url：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" name="headPortraitUrl">
+                    <div class="file-loading">
+                        <input class="form-control file-upload" id="headPortraitUrl" name="file" type="file">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">相册json：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" name="pictureJson">
+                    <div class="file-loading">
+                        <input class="form-control file-upload" id="pictureJson" name="file" type="file">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">身份证号：</label>
+                <div class="col-sm-8">
+                    <input name="idCard" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否实名认证：</label>
+                <div class="col-sm-8">
+                    <select name="isAutonym" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否学历认证：</label>
+                <div class="col-sm-8">
+                    <select name="isEducation" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否婚况认证：</label>
+                <div class="col-sm-8">
+                    <select name="isMarriage" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否车辆认证：</label>
+                <div class="col-sm-8">
+                    <select name="isCar" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否房产认证：</label>
+                <div class="col-sm-8">
+                    <select name="isHouse" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否工作认证：</label>
+                <div class="col-sm-8">
+                    <select name="isWork" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否收入认证：</label>
+                <div class="col-sm-8">
+                    <select name="isIncome" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">自我描述：</label>
+                <div class="col-sm-8">
+                    <textarea name="selfDescription" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">兴趣爱好：</label>
+                <div class="col-sm-8">
+                    <textarea name="interest" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">择偶标准描述：</label>
+                <div class="col-sm-8">
+                    <textarea name="mateCriterionDescription" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">家庭背景：</label>
+                <div class="col-sm-8">
+                    <textarea name="familyBackground" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">状态：</label>
+                <div class="col-sm-8">
+                    <select name="state" class="form-control m-b" th:with="type=${@dict.getType('xq_member_state')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <textarea name="remark" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否隐身：</label>
+                <div class="col-sm-8">
+                    <select name="isConceal" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <th:block th:include="include :: bootstrap-fileinput-js"/>
+    <script th:inline="javascript">
+        var prefix = ctx + "blinddate/xq_member"
+        $("#form-xq_member-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-xq_member-add').serialize());
+            }
+        }
+
+        $("input[name='birthDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $(".file-upload").fileinput({
+            uploadUrl: ctx + 'common/upload',
+            maxFileCount: 1,
+            autoReplace: true
+        }).on('fileuploaded', function (event, data, previewId, index) {
+            $("input[name='" + event.currentTarget.id + "']").val(data.response.url)
+        }).on('fileremoved', function (event, id, index) {
+            $("input[name='" + event.currentTarget.id + "']").val('')
+        })
+    </script>
+</body>
+</html>
