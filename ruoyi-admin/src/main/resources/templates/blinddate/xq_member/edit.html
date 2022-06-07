@@ -31,6 +31,7 @@
                 <label class="col-sm-3 control-label is-required">性别：</label>
                 <div class="col-sm-8">
                     <select name="sex" class="form-control m-b" th:with="type=${@dict.getType('sys_user_sex')}" required>
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sex}"></option>
                     </select>
                 </div>
@@ -72,6 +73,7 @@
                 <label class="col-sm-3 control-label is-required">月收入：</label>
                 <div class="col-sm-8">
                     <select name="income" class="form-control m-b" th:with="type=${@dict.getType('xq_income')}" required>
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{income}"></option>
                     </select>
                 </div>
@@ -86,6 +88,7 @@
                 <label class="col-sm-3 control-label is-required">学历：</label>
                 <div class="col-sm-8">
                     <select name="education" class="form-control m-b" th:with="type=${@dict.getType('xq_education')}" required>
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{education}"></option>
                     </select>
                 </div>
@@ -124,6 +127,7 @@
                 <label class="col-sm-3 control-label is-required">婚姻状况：</label>
                 <div class="col-sm-8">
                     <select name="marriage" class="form-control m-b" th:with="type=${@dict.getType('xq_marriage')}" required>
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{marriage}"></option>
                     </select>
                 </div>
@@ -132,6 +136,7 @@
                 <label class="col-sm-3 control-label">是否有小孩：</label>
                 <div class="col-sm-8">
                     <select name="isKid" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isKid}"></option>
                     </select>
                 </div>
@@ -146,6 +151,7 @@
                 <label class="col-sm-3 control-label">是否要小孩：</label>
                 <div class="col-sm-8">
                     <select name="isDemandKid" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isDemandKid}"></option>
                     </select>
                 </div>
@@ -160,6 +166,7 @@
                 <label class="col-sm-3 control-label">买车情况：</label>
                 <div class="col-sm-8">
                     <select name="car" class="form-control m-b" th:with="type=${@dict.getType('xq_car')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{car}"></option>
                     </select>
                 </div>
@@ -174,6 +181,7 @@
                 <label class="col-sm-3 control-label">买房情况：</label>
                 <div class="col-sm-8">
                     <select name="house" class="form-control m-b" th:with="type=${@dict.getType('xq_house')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{house}"></option>
                     </select>
                 </div>
@@ -200,6 +208,7 @@
                 <label class="col-sm-3 control-label">宗教信仰：</label>
                 <div class="col-sm-8">
                     <select name="religion" class="form-control m-b" th:with="type=${@dict.getType('xq_religion')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{religion}"></option>
                     </select>
                 </div>
@@ -208,6 +217,7 @@
                 <label class="col-sm-3 control-label">是否抽烟：</label>
                 <div class="col-sm-8">
                     <select name="isSmoking" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isSmoking}"></option>
                     </select>
                 </div>
@@ -216,6 +226,7 @@
                 <label class="col-sm-3 control-label">是否喝酒：</label>
                 <div class="col-sm-8">
                     <select name="isDrink" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isDrink}"></option>
                     </select>
                 </div>
@@ -248,6 +259,7 @@
                 <label class="col-sm-3 control-label">是否实名认证：</label>
                 <div class="col-sm-8">
                     <select name="isAutonym" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isAutonym}"></option>
                     </select>
                 </div>
@@ -256,6 +268,7 @@
                 <label class="col-sm-3 control-label">是否学历认证：</label>
                 <div class="col-sm-8">
                     <select name="isEducation" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isEducation}"></option>
                     </select>
                 </div>
@@ -264,6 +277,7 @@
                 <label class="col-sm-3 control-label">是否婚况认证：</label>
                 <div class="col-sm-8">
                     <select name="isMarriage" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isMarriage}"></option>
                     </select>
                 </div>
@@ -272,6 +286,7 @@
                 <label class="col-sm-3 control-label">是否车辆认证：</label>
                 <div class="col-sm-8">
                     <select name="isCar" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isCar}"></option>
                     </select>
                 </div>
@@ -280,6 +295,7 @@
                 <label class="col-sm-3 control-label">是否房产认证：</label>
                 <div class="col-sm-8">
                     <select name="isHouse" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isHouse}"></option>
                     </select>
                 </div>
@@ -288,6 +304,7 @@
                 <label class="col-sm-3 control-label">是否工作认证：</label>
                 <div class="col-sm-8">
                     <select name="isWork" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isWork}"></option>
                     </select>
                 </div>
@@ -296,6 +313,7 @@
                 <label class="col-sm-3 control-label">是否收入认证：</label>
                 <div class="col-sm-8">
                     <select name="isIncome" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isIncome}"></option>
                     </select>
                 </div>
@@ -328,6 +346,7 @@
                 <label class="col-sm-3 control-label">状态：</label>
                 <div class="col-sm-8">
                     <select name="state" class="form-control m-b" th:with="type=${@dict.getType('xq_member_state')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{state}"></option>
                     </select>
                 </div>
@@ -342,6 +361,7 @@
                 <label class="col-sm-3 control-label">是否隐身：</label>
                 <div class="col-sm-8">
                     <select name="isConceal" class="form-control m-b" th:with="type=${@dict.getType('xq_yes_no')}">
+                        <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{isConceal}"></option>
                     </select>
                 </div>
@@ -479,6 +499,10 @@
 
             })
             $(this).fileinput('_initFileActions');        });
+
+             function strOnchange(name , select_name){
+            $("input[name='" + name + "']").val($("select[name='" + select_name + "']").find("option:selected").text());
+        }
 
     </script>
 </body>

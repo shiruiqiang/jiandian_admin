@@ -186,7 +186,10 @@
                             </li>
                             <li>
                                 <label>是否删除：</label>
-                                <input type="text" name="isDelete"/>
+                                <select name="isDelete" th:with="type=${@dict.getType('xq_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li>
                             <li>
                                 <label>状态：</label>
