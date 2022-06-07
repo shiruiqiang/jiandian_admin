@@ -163,4 +163,25 @@ public class CommonController
             log.error("下载文件失败", e);
         }
     }
+
+    /**
+     * 删除指定文件
+     */
+    @GetMapping("/delete/file")
+    public void resourceDelete(String resource, HttpServletRequest request, HttpServletResponse response)
+            throws Exception
+    {
+        try
+        {
+            // 本地资源路径
+            String localPath = RuoYiConfig.getProfile();
+            // 地址
+            String deletePath = localPath + resource;
+            FileUtils.deleteFile(deletePath);
+        }
+        catch (Exception e)
+        {
+            log.error(resource + "删除文件失败: ", e);
+        }
+    }
 }
