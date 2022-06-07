@@ -225,7 +225,7 @@
                 <div class="col-sm-8">
                     <input type="hidden" name="headPortraitUrl" th:field="*{headPortraitUrl}">
                     <div class="file-loading">
-                        <input class="form-control file-upload" id="headPortraitUrl" name="file" type="file">
+                        <input class="form-control file-upload file-upload-headPortraitUrl" id="headPortraitUrl" name="file" type="file">
                     </div>
                 </div>
             </div>
@@ -234,7 +234,7 @@
                 <div class="col-sm-8">
                     <input type="hidden" name="pictureJson" th:field="*{pictureJson}">
                     <div class="file-loading">
-                        <input class="form-control file-upload" id="pictureJson" name="file" type="file">
+                        <input class="form-control file-upload file-upload-pictureJson" id="pictureJson" name="files" type="file" multiple>
                     </div>
                 </div>
             </div>
@@ -352,13 +352,30 @@
     <th:block th:include="include :: datetimepicker-js" />
     <th:block th:include="include :: bootstrap-fileinput-js"/>
     <script th:inline="javascript">
+        debugger;
         var prefix = ctx + "blinddate/xq_member";
+        var pictureJsonArray = [];
+        var filePathArray = [];
+        var pictureJsonDeleteArray = [];
+        var pictureDelete = true;
         $("#form-xq_member-edit").validate({
             focusCleanup: true
         });
 
         function submitHandler() {
             if ($.validate.form()) {
+                if(pictureJsonDeleteArray.length > 0){
+                    pictureJsonDeleteArray.forEach(function(value, index){
+                       $.ajax({
+                        type: "GET",
+                        url: ctx + 'common/delete/file',
+                        data: "resource=" + value.substring(value.indexOf("/upload")),
+                        success: function(msg){
+                        }
+                    })
+                    })
+                }
+                $("input[name='pictureJson']").val(JSON.stringify(pictureJsonArray))
                 $.operate.save(prefix + "/edit", $('#form-xq_member-edit').serialize());
             }
         }
@@ -369,18 +386,97 @@
             autoclose: true
         });
 
-        $(".file-upload").each(function (i) {
+        $(".file-upload-headPortraitUrl").each(function (i) {
             var val = $("input[name='" + this.id + "']").val()
             $(this).fileinput({
                 'uploadUrl': ctx + 'common/upload',
                 initialPreviewAsData: true,
                 initialPreview: [val],
                 maxFileCount: 1,
-                autoReplace: true
+                autoReplace: true,
+                maxFileSize: 8192
             }).on('fileuploaded', function (event, data, previewId, index) {
+                var value = $("input[name='" + event.currentTarget.id + "']").val();
+                if(!!value){
+                     $.ajax({
+                        type: "GET",
+                        url: ctx + 'common/delete/file',
+                        data: "resource=" + value.substring(value.indexOf("/upload")),
+                        success: function(msg){
+                        }
+                    })
+                }
                 $("input[name='" + event.currentTarget.id + "']").val(data.response.url)
-            }).on('fileremoved', function (event, id, index) {
+            }).on('filesuccessremove', function (event, id, index) {
+                var value = $("input[name='" + event.currentTarget.id + "']").val();
+                if(!!value){
+                     $.ajax({
+                        type: "GET",
+                        url: ctx + 'common/delete/file',
+                        data: "resource=" + value.substring(value.indexOf("/upload")),
+                        success: function(msg){
+                        }
+                    })
+                }
                 $("input[name='" + event.currentTarget.id + "']").val('')
+            })
+            $(this).fileinput('_initFileActions');        });
+
+
+            $(".file-upload-pictureJson").each(function (i) {
+            if(!!$("input[name='" + this.id + "']").val()){
+               pictureJsonArray = JSON.parse($("input[name='" + this.id + "']").val());
+            }
+
+            $(this).fileinput({
+                'uploadUrl': ctx + 'common/uploads',
+                initialPreviewAsData: true,
+                initialPreview: pictureJsonArray,
+                uploadAsync: false,
+                maxFileCount: 4,
+                maxFileSize: 8192
+            }).on('filebatchuploadsuccess', function (event, data, previewId, index) {
+                if(pictureDelete){
+                    pictureDelete = false;
+                    pictureJsonDeleteArray = pictureJsonArray;
+                    pictureJsonArray = [];
+                }
+                var urlarray = data.response.urls.split(",");
+                pictureJsonArray = pictureJsonArray.concat(urlarray);
+                filePathArray = filePathArray.concat(data.response.fileNames.split(","));
+            }).on('filesuccessremove', function (event, id, index) {
+
+               var  filePath = "";
+              var array = id.split("_");
+              if(array.length > 1){
+               var str = array[1].slice(0,array[1].indexOf("."))
+                  filePath = filePathArray.find(i => {
+                    return i.indexOf(str) != -1 ? true:false;
+                })
+
+                pictureJsonArray = pictureJsonArray.filter(i => {
+                return i.indexOf(str) != -1 ? false:true;
+                })
+                 filePathArray = filePathArray.filter(i => {
+                return i.indexOf(str) != -1 ? false:true;
+                })
+              }else{
+                   <!--var url_ = $("#" + id).find(".kv-file-content").find("img").prop("src");-->
+                    <!--pictureJsonArray = pictureJsonArray.filter(i => {-->
+                        <!--return i != url_? true:false;-->
+                    <!--})-->
+                    <!--filePath = url_.substring(url.indexOf("/profile"))-->
+              }
+
+
+                $.ajax({
+                    type: "GET",
+                    url: ctx + 'common/delete/file',
+                    data: "resource=" + filePath.replace("/profile",""),
+                    success: function(msg){
+                }
+            });
+
             })
             $(this).fileinput('_initFileActions');        });
 

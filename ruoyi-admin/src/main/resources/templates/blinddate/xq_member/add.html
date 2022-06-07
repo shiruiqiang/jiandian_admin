@@ -233,7 +233,7 @@
                 <div class="col-sm-8">
                     <input type="hidden" name="pictureJson">
                     <div class="file-loading">
-                        <input class="form-control file-upload" id="pictureJson" name="file" type="file">
+                        <input class="form-control"  id="pictureJson"  name="files" type="file" multiple>
                     </div>
                 </div>
             </div>
@@ -352,12 +352,15 @@
     <th:block th:include="include :: bootstrap-fileinput-js"/>
     <script th:inline="javascript">
         var prefix = ctx + "blinddate/xq_member"
+        var pictureJsonArray = [];
+        var filePathArray = [];
         $("#form-xq_member-add").validate({
             focusCleanup: true
         });
 
         function submitHandler() {
             if ($.validate.form()) {
+                $("input[name='pictureJson']").val(JSON.stringify(pictureJsonArray))
                 $.operate.save(prefix + "/add", $('#form-xq_member-add').serialize());
             }
         }
@@ -371,12 +374,70 @@
         $(".file-upload").fileinput({
             uploadUrl: ctx + 'common/upload',
             maxFileCount: 1,
-            autoReplace: true
+            autoReplace: true,
+            maxFileSize: 8192
         }).on('fileuploaded', function (event, data, previewId, index) {
+            var value = $("input[name='" + event.currentTarget.id + "']").val();
+                if(!!value){
+                     $.ajax({
+                        type: "GET",
+                        url: ctx + 'common/delete/file',
+                        data: "resource=" + value.substring(value.indexOf("/upload")),
+                        success: function(msg){
+                        }
+                    })
+                }
             $("input[name='" + event.currentTarget.id + "']").val(data.response.url)
-        }).on('fileremoved', function (event, id, index) {
+        }).on('filesuccessremove', function (event, id, index) {
+            var value = $("input[name='" + event.currentTarget.id + "']").val();
+                if(!!value){
+                     $.ajax({
+                        type: "GET",
+                        url: ctx + 'common/delete/file',
+                        data: "resource=" + value.substring(value.indexOf("/upload")),
+                        success: function(msg){
+                        }
+                    })
+                }
             $("input[name='" + event.currentTarget.id + "']").val('')
         })
+
+                // 多图上传
+        $("#pictureJson").fileinput({
+            uploadUrl: ctx + 'common/uploads',
+            uploadAsync: false,
+            maxFileCount: 4,
+            maxFileSize: 8192
+        }).on('filebatchuploadsuccess', function (event, data, previewId, index) {
+        	var urlarray = data.response.urls.split(",");
+            pictureJsonArray = pictureJsonArray.concat(urlarray);
+            filePathArray = filePathArray.concat(data.response.fileNames.split(","));
+
+        }).on('filesuccessremove', function (event, id, index) {
+            var array = id.split("_");
+            var str = array[1].slice(0,array[1].indexOf("."))
+            var  filePath = filePathArray.find(i => {
+                return i.indexOf(str) != -1 ? true:false;
+            })
+
+            pictureJsonArray = pictureJsonArray.filter(i => {
+            return i.indexOf(str) != -1 ? false:true;
+            })
+             filePathArray = filePathArray.filter(i => {
+            return i.indexOf(str) != -1 ? false:true;
+            })
+
+            $.ajax({
+            type: "GET",
+            url: ctx + 'common/delete/file',
+            data: "resource=" + filePath.replace("/profile",""),
+            success: function(msg){
+            }
+            });
+        })
+
+
+
     </script>
 </body>
 </html>
