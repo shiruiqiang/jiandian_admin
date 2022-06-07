@@ -457,7 +457,12 @@
         })
 
         function strOnchange(name , select_name){
-            $("input[name='" + name + "']").val($("select[name='" + select_name + "']").find("option:selected").text());
+            var value = $("select[name='" + select_name + "']").find("option:selected").text();
+            if(value == '请选择'){
+                $("input[name='" + name + "']").val("");
+            }else{
+                $("input[name='" + name + "']").val($("select[name='" + select_name + "']").find("option:selected").text());
+            }
         }
 
 
